@@ -3,21 +3,30 @@
 module Logic(
     input CLK, SCLK
                reg [15 : 0] DATA_IN,
-               reg CS,
+               reg SCLK,
                reg IMPULSE, 
     output reg LDAC, 
            reg [15 : 0] DATA_OUT,
-           reg start_sdi  
+           reg START_SPI  
 
 );
 
+//case stage_of_installing_a_temporary_puls 
+reg [4 : 0] strart = 1'b1;
+reg [4 : 0] set_parametrs = 2'b10;
+reg [4 : 0] open_LDAC = 2'b11;
+reg [4 : 0] spi_start = 3'b100;
+
+reg resolution_spi_start = 0;
 reg [15 : 0] data = 0;
 reg [15 : 0] counter_for_open_LDAC = _99_;//посчитать
 reg [10 : 0] counter_16bits_for_CS = 0;
 
-always@(posedge CLK) begin
-    data = DATA_IN;
-end
+reg [4 : 0] stage_of_installing_a_temporary_pulse = 0;
+
+reg counter_16bits_for_CS_resolution = 0;
+
+assign DATA_OUT = data;
 
 always@(posedge SCLK) begin
 
@@ -25,25 +34,45 @@ always@(posedge SCLK) begin
         counter_16bits_for_CS = counter_16bits_for_CS + 1;
         CS = 1;
     end
+
     else begin
         counter_16bits_for_CS = 0;
         CS = 0;
     end
 
     if (IMPULSE == 1 ) begin
-        start_sdi <= 1;
         if (counter_for_open_LDAC != _1000_) begin //не забыть поменять
             counter_for_open_LDAC = counter_for_open_LDAC + 1;
-            LDAC = 0;
         end
         else begin
             counter_for_open_LDAC = 0;
-            LDAC = 1;
         end
     end
+
     else begin
-        start_sdi <= 0;
+        START_SPI <= 0;
     end
+end
+
+always@(posedge SCLK) begin
+    case (stage_of_installing_a_temporary_pulse)
+        strart : begin
+            CS = 1;
+            IMPULSE = 0;
+            DATA_OUT = 0;
+            stage_of_installing_a_temporary_puls <= set_parametrs;
+        end
+        set_parametrs : begin
+            CS = 0;
+            IMPULSE = 1;
+            DATA_OUT = DATA_IN;
+            stage_of_installing_a_temporary_puls <= spi_start 
+        end
+        spi_start : begin
+            START_SPI <= 1; 
+        end
+        default: 
+    endcase
 end
 
 endmodule

@@ -2,7 +2,7 @@
 module Frequency_divider_CS #(
     parameter DIVIDER = 2
 )(
-    input clk, 
+    input CLK, 
     output reg SCLK 
 );
 
@@ -10,9 +10,9 @@ reg [25:0] count = 0;
                       
 reg sclk_flag = 0;
 
-assign CS = sclk_flag;
+assign SCLK = sclk_flag;
 
-always @(posedge clk) begin
+always @(posedge CLK) begin
     count <= count + 1; 
     if (count == DIVIDER - 1) begin 
         count <= 0; 

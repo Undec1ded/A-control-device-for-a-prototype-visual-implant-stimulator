@@ -13,7 +13,7 @@ reg [data_hier_bit - 1 : 0] data_amplitude;
 
 assign SDI = SDI_transfer;
 
-always @(posedge CS) begin
+always @(SCLK) begin
     if (SDI_flag == 0) begin
         data_amplitude = DATA;
     end

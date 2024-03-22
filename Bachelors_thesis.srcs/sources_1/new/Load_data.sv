@@ -3,7 +3,7 @@ module Load_data #(
     parametr voltage_amplitude_bits = 14,
     parameter cap_choose_bits = 2
 )(
-    input clk, [voltage_amplitude_bits - 1 : 0] voltage_amplitude, [cap_choose_bits - 1 : 0] cap_choose,
+    input CLK, [voltage_amplitude_bits - 1 : 0] VOLTAGE_amplitude, [cap_choose_bits - 1 : 0] CAP_choose,
     output  DATA
 );
 
