@@ -29,6 +29,7 @@ reg [4 : 0] mks17 = 5'b10001;
 reg [4 : 0] mks18 = 5'b10010;
 reg [4 : 0] mks19 = 5'b10011;
 reg [4 : 0] mks20 = 5'b10100;
+reg [8 : 0] mks400 = 9'b110010000;
 
 reg [10 : 0] time_param = 0;
 
@@ -74,12 +75,13 @@ always@(posedge CLK) begin
         mks18 : time_param = 18;
         mks19 : time_param = 19;
         mks20 : time_param = 20;
+        mhs400 : time_param = 400;
         default: begin 
             time_param = 0;
             MGz_timer = 0;
         end 
     endcase 
-
+    
     if (MGz_timer != time_param) begin
         TIME_impulse = 1;
         MGz_timer = kGz_timer + 1;
