@@ -3,7 +3,6 @@
 module Logic(
     input CLK, SCLK
                reg [15 : 0] DATA_IN,
-               reg SCLK,
                reg IMPULSE, 
                END_spi,
     output reg LDAC, 
@@ -11,8 +10,9 @@ module Logic(
            reg START_SPI,  
            reg CS 
 );
-reg [4 : 0] stage_of_installing_a_temporary_pulse_CLK = 0;
+reg [4 : 0] stage_of_installing_a_temporary_pulse_CLK = strart_CLK;
 reg strart_CLK = 1'b1;
+reg [1 : 0] start_SPI_CLK = 2'b10;
 
 reg [4 : 0] stage_of_installing_a_temporary_pulse_SCLK = 0;
 reg strart_SCLK = 1'b1;
@@ -26,8 +26,14 @@ reg [15 : 0] data = 0;
 always @(posedge CLK) begin
     case (stage_of_installing_a_temporary_pulse_CLK)
         strart_CLK : begin
-           
+           data = DATA_IN;
+           stage_of_installing_a_temporary_pulse_SCLK <= strart_CLK;
         end 
+        start_SPI_CLK : begin
+            if (IMPULSE != 0) begin
+                
+            end
+        end
         default: 
     endcase
 end
