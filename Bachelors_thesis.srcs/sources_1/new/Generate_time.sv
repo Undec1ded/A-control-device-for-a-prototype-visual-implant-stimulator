@@ -34,7 +34,7 @@ reg [8 : 0] mks400 = 9'b110010000;
 
 reg [10 : 0] time_param = 0;
 
-reg covert_to_MkGz = 0;
+reg covert_to_1MGz = 0;
 
 reg [25 : 0] time_counter = 0;
 reg [10 : 0] MGz_timer = 0;
@@ -55,7 +55,7 @@ always@(posedge CLK) begin
 end
 
 always@(posedge CLK) begin
-    case (time_impulse_bits)
+    case (TIME_impulse_bits)
         mks1 : time_param = 1;
         mks2 : time_param = 2;
         mks3 : time_param = 3;
@@ -86,10 +86,10 @@ always@(posedge CLK) begin
     
     if (MGz_timer != time_param) begin
         TIME_impulse = 1;
-        MGz_timer = kGz_timer + 1;
+        MGz_timer = MGz_timer + 1;
     end
     else begin
-        time_impulse = 0;
+        TIME_impulse = 0;
         MGz_timer = 0;
     end    
 end

@@ -14,7 +14,7 @@ reg [13 : 0] voltage_amplitude_test = 14'b1110000_1110000;
 
 assign DATA = data_output;
 
-always @(posedge clk) begin
+always @(posedge CLK) begin
     data_output = {cap_choose_test , voltage_amplitude_test};
 end
 
