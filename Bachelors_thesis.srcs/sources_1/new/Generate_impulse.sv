@@ -10,7 +10,7 @@ parameter tipe_pulse_packatge_interval = 50_000
                         reg TIME_SECOND_IMPULSE,
                         reg TIME_PULSE_INTERVAL,
                         reg TIME_PULSE_PACKATGE_INTERVAL,
-    output reg IMPULSE_RESOLUTION
+    output reg [3 : 0] IMPULSE_RESOLUTION
     );
 
 reg [20 : 0] counter_time = 0;
@@ -31,7 +31,7 @@ always @(posedge clk) begin
         else begin
             if (sw_test == 1) begin
                 counter_time = 0;
-                IMPULSE_RESOLUTION = 0;
+                IMPULSE_RESOLUTION = 1;
                 state_impulse <= pulse_interval;    
             end
             else begin
@@ -42,37 +42,38 @@ always @(posedge clk) begin
     pulse_interval : begin
         if (counter_time != time_pulse_interval_test) begin
             counter_time = counter_time + 1;
-            IMPULSE_RESOLUTION = 1;
+            IMPULSE_RESOLUTION = 2;
         end
         else begin
             counter_time = 0;
-            IMPULSE_RESOLUTION = 0;
+            IMPULSE_RESOLUTION = 2;
             state_impulse <= second_impulse;
         end
     end
     second_impulse : begin
         if (counter_time =! time_second_impulse_test) begin
             counter_time = counter_time + 1;
-            IMPULSE_RESOLUTION = 1;
+            IMPULSE_RESOLUTION = 3;
         end
         else begin
             counter_time = 0;
-            IMPULSE_RESOLUTION = 0;
+            IMPULSE_RESOLUTION = 3;
             state_impulse <= pulse_interval;
         end
     end
     pulse_packatge_interval : begin
         if (counter_time != tipe_pulse_packatge_interval) begin
             counter_time = counter_time + 1;
-            IMPULSE_RESOLUTION = 1;
+            IMPULSE_RESOLUTION = 4;
         end
         else begin
             counter_time = 0;
-            IMPULSE_RESOLUTION = 0;
-            state_impulse <= first_impulse;
+            IMPULSE_RESOLUTION = 4;
+            state_impulse <= default;
         end
     end 
         default: begin
+           IMPULSE_RESOLUTION = 0;
            if (sw_test == 0) begin
                 state_impulse = 0;
            end 

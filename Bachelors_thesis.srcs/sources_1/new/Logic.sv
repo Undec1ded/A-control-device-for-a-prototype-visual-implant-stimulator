@@ -3,7 +3,7 @@
 module Logic(
     input CLK, SCLK
                reg [15 : 0] DATA_IN,
-               reg IMPULSE, 
+               reg TIME_IMPULSE, 
                END_spi,
     output reg LDAC, 
            reg [15 : 0] DATA_OUT,
@@ -12,26 +12,149 @@ module Logic(
 );
 reg [4 : 0] stage_of_installing_a_temporary_pulse_CLK = strart_CLK;
 reg strart_CLK = 1'b1;
-reg [1 : 0] start_SPI_CLK = 2'b10;
+reg [1 : 0] start_SPI_CLK_for_first_pulse = 2'b10;
+reg [1 : 0] open_LDAC_for_first_pulse = 2'b11;
+reg [2 : 0] start_SPI_CLK_for_second_pulse = 3'b100;
+reg [2 : 0] open_LDAC_for_second_pulse = 3'b101;
+reg [2 : 0] start_SPI_CLK_for_third_pulse = 3'b110;
+reg [2 : 0] open_LDAC_for_third_pulse = 3'b111;
+reg [3 : 0] start_SPI_CLK_for_fourth_pulse = 4'b1000;
+reg [3 : 0] open_LDAC_for_fourth_pulse = 4'b1001;
+reg [3 : 0] start_SPI_CLK_for_fifth_pulse = 4'b1010;
+reg [3 : 0] open_LDAC_for_fifth_pulse = 4'b1011;
 
 reg [4 : 0] stage_of_installing_a_temporary_pulse_SCLK = 0;
 reg strart_SCLK = 1'b1;
 reg [1 : 0] start_SPI_SCLK = 2'b10;
-reg [1 : 0] END_spi_SCLK = 2'b11;
+reg [1 : 0] end_spi_SCLK = 2'b11;
 reg [2 : 0] open_LDAC_SCLK = 3'b100;
 reg [2 : 0] close_LDAC_SCLK = 3'b101;
 
+reg [5 : 0] coounter_for_close_LDAC = 0;
+reg [20 : 0] counter_16bits_for_CS = 0;
 reg [15 : 0] data = 0;
+reg counter_16bits_for_CS_end = 0;
 
 always @(posedge CLK) begin
     case (stage_of_installing_a_temporary_pulse_CLK)
         strart_CLK : begin
            data = DATA_IN;
-           stage_of_installing_a_temporary_pulse_SCLK <= strart_CLK;
+           stage_of_installing_a_temporary_pulse_SCLK <= start_SPI_SCLK;
+           stage_of_installing_a_temporary_pulse_CLK <= strart_CLK;
         end 
         start_SPI_CLK : begin
-            if (IMPULSE != 0) begin
-                
+            if (TIME_IMPULSE == 1 & counter_16bits_for_CS != 6'b100_000 & counter_16bits_for_CS_end != 1) begin //counter_16bits_for_CS != 32
+                counter_16bits_for_CS = counter_16bits_for_CS + 1;
+                counter_16bits_for_CS_end = 0;
+            end
+            else begin
+                counter_16bits_for_CS = 0;
+                counter_16bits_for_CS_end = 1;
+                stage_of_installing_a_temporary_pulse_SCLK <= END_spi_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= open_LDAC_for_first_pulse;
+            end
+        end
+        open_LDAC_for_first_pulse : begin
+            if (TIME_IMPULSE == 1 & END_spi == 1 & coounter_for_close_LDAC != 5) begin
+                stage_of_installing_a_temporary_pulse_SCLK <= open_LDAC_SCLK;
+                coounter_for_close_LDAC = coounter_for_close_LDAC + 1;
+            end
+            else begin
+                stage_of_installing_a_temporary_pulse_SCLK <= close_LDAC_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= start_SPI_CLK_for_second_pulse;
+                coounter_for_close_LDAC = 0;
+            end
+        end
+        start_SPI_CLK_for_second_pulse : begin
+              if (TIME_IMPULSE == 2 & counter_16bits_for_CS != 6'b100_000 & counter_16bits_for_CS_end != 1) begin //counter_16bits_for_CS != 32
+                counter_16bits_for_CS = counter_16bits_for_CS + 1;
+                counter_16bits_for_CS_end = 0;
+            end
+            else begin
+                counter_16bits_for_CS = 0;
+                counter_16bits_for_CS_end = 1;
+                stage_of_installing_a_temporary_pulse_SCLK <= END_spi_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= open_LDAC_for_second_pulse;
+            end
+        end
+        open_LDAC_for_second_pulse : begin
+             if (TIME_IMPULSE == 2 & END_spi == 1 & coounter_for_close_LDAC != 5) begin
+                stage_of_installing_a_temporary_pulse_SCLK <= open_LDAC_SCLK;
+                coounter_for_close_LDAC = coounter_for_close_LDAC + 1;
+            end
+            else begin
+                stage_of_installing_a_temporary_pulse_SCLK <= close_LDAC_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= start_SPI_CLK_for_third_pulse;
+                coounter_for_close_LDAC = 0;
+            end
+        end
+        start_SPI_CLK_for_third_pulse : begin
+            if (TIME_IMPULSE == 3 & counter_16bits_for_CS != 6'b100_000 & counter_16bits_for_CS_end != 1) begin //counter_16bits_for_CS != 32
+                counter_16bits_for_CS = counter_16bits_for_CS + 1;
+                counter_16bits_for_CS_end = 0;
+            end
+            else begin
+                counter_16bits_for_CS = 0;
+                counter_16bits_for_CS_end = 1;
+                stage_of_installing_a_temporary_pulse_SCLK <= END_spi_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= open_LDAC_for_third_pulse;            
+            end
+        end
+        open_LDAC_for_third_pulse : begin
+             if (TIME_IMPULSE == 3 & END_spi == 1 & coounter_for_close_LDAC != 5) begin
+                stage_of_installing_a_temporary_pulse_SCLK <= open_LDAC_SCLK;
+                coounter_for_close_LDAC = coounter_for_close_LDAC + 1;
+            end
+            else begin
+                stage_of_installing_a_temporary_pulse_SCLK <= close_LDAC_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= start_SPI_CLK_for_fourth_pulse;
+                coounter_for_close_LDAC = 0;
+            end
+        end
+        start_SPI_CLK_for_fourth_pulse : begin
+            if (TIME_IMPULSE == 4 & counter_16bits_for_CS != 6'b100_000 & counter_16bits_for_CS_end != 1) begin //counter_16bits_for_CS != 32
+                counter_16bits_for_CS = counter_16bits_for_CS + 1;
+                counter_16bits_for_CS_end = 0;
+            end
+            else begin
+                counter_16bits_for_CS = 0;
+                counter_16bits_for_CS_end = 1;
+                stage_of_installing_a_temporary_pulse_SCLK <= END_spi_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= open_LDAC_for_fourth_pulse;            
+            end
+        end
+        open_LDAC_for_fourth_pulse : begin
+             if (TIME_IMPULSE == 4 & END_spi == 1 & coounter_for_close_LDAC != 5) begin
+                stage_of_installing_a_temporary_pulse_SCLK <= open_LDAC_SCLK;
+                coounter_for_close_LDAC = coounter_for_close_LDAC + 1;
+            end
+            else begin
+                stage_of_installing_a_temporary_pulse_SCLK <= close_LDAC_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= start_SPI_CLK_for_fifth_pulse;
+                coounter_for_close_LDAC = 0;
+            end
+        end
+        start_SPI_CLK_for_fifth_pulse : begin
+            if (TIME_IMPULSE == 5 & counter_16bits_for_CS != 6'b100_000 & counter_16bits_for_CS_end != 1) begin //counter_16bits_for_CS != 32
+                counter_16bits_for_CS = counter_16bits_for_CS + 1;
+                counter_16bits_for_CS_end = 0;
+            end
+            else begin
+                counter_16bits_for_CS = 0;
+                counter_16bits_for_CS_end = 1;
+                stage_of_installing_a_temporary_pulse_SCLK <= END_spi_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= open_LDAC_for_fifth_pulse;            
+            end
+        end
+        open_LDAC_for_fifth_pulse : begin
+             if (TIME_IMPULSE == 5 & END_spi == 1 & coounter_for_close_LDAC != 5) begin
+                stage_of_installing_a_temporary_pulse_SCLK <= open_LDAC_SCLK;
+                coounter_for_close_LDAC = coounter_for_close_LDAC + 1;
+            end
+            else begin
+                stage_of_installing_a_temporary_pulse_SCLK <= close_LDAC_SCLK;
+                stage_of_installing_a_temporary_pulse_CLK <= strart_CLK;
+                coounter_for_close_LDAC = 0;
             end
         end
         default: 
@@ -57,7 +180,7 @@ always @(posedge SCLK) begin
                 START_SPI = 1;
             end
         end
-        END_spi_SCLK : begin
+        end_spi_SCLK : begin
             CS = 1;
             START_SPI = 0;
             DATA_OUT = 0;
