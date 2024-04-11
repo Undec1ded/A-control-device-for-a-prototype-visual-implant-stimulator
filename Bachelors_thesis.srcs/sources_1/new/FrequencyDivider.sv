@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module Frequency_divider_CS #(
+module Frequency_divider_SCLK #(
     parameter DIVIDER = 2
 )(
     input CLK, 
