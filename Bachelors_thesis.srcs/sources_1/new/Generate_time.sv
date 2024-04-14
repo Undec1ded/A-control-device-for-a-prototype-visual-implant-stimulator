@@ -56,28 +56,9 @@ end
 
 always@(posedge CLK) begin
     case (TIME_impulse_bits)
-        mks1 : time_param = 1;
-        mks2 : time_param = 2;
-        mks3 : time_param = 3;
-        mks4 : time_param = 4;
-        mks5 : time_param = 5;
-        mks6 : time_param = 6;
-        mks7 : time_param = 7;
-        mks8 : time_param = 8;
-        mks9 : time_param = 9;
         mks10 : time_param = 10;
-        mks11 : time_param = 11;
-        mks12 : time_param = 12;
-        mks13 : time_param = 13;
-        mks14 : time_param = 14;
-        mks15 : time_param = 15;
-        mks16 : time_param = 16;
-        mks17 : time_param = 17;
-        mks18 : time_param = 18;
-        mks19 : time_param = 19;
-        mks20 : time_param = 20;
         mks100 : time_param = 100;
-        mks400 : time_param = 400;
+        mks400 : time_param = 400; 
         default: begin 
             time_param = 0;
             MGz_timer = 0;
