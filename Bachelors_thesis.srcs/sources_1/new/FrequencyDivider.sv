@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 module Frequency_divider_SCLK #(
-    parameter DIVIDER = 2
+    parameter DIVIDER = 3
 )(
     input CLK, 
     output reg SCLK 

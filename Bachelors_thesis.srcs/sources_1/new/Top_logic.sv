@@ -21,6 +21,7 @@ wire [3 : 0] pulse_resolution_wire;
 
 //SPI parametrs
 wire end_spi_flag;
+wire [4 : 0] bits_counter_spi_wire;
 
 assign SCLK = sclk_wire;
 
@@ -42,10 +43,10 @@ SPI SPI (
     //input
     .SCLK(sclk_wire), .SDI_flag(start_sdi_wire), .DATA(data_out_wire), 
     //output
-    .END_spi(end_spi_flag), .SDI(SDI));
+    .END_spi(end_spi_flag), .SDI(SDI), .BITS_COUNTER_SPI(bits_counter_spi_wire));
  Logic Logic (
     //input
-    .CLK(CLK), .SCLK(sclk_wire), .SW(SW), .END_spi(end_spi_flag), .DATA_IN_At(data_At_wire), .DATA_IN_Bt(data_Bt_wire), .TIME_IMPULSE(pulse_resolution_wire),
+    .CLK(CLK), .SCLK(sclk_wire), .SW(SW), .END_spi(end_spi_flag), .DATA_IN_At(data_At_wire), .DATA_IN_Bt(data_Bt_wire), .TIME_IMPULSE(pulse_resolution_wire), .BITS_COUNTER_SPI(bits_counter_spi_wire),
     //output
     .LDAC(LDAC), .CS(CS), .DATA_OUT(data_out_wire), .START_SPI(start_sdi_wire));
 
