@@ -6,10 +6,10 @@ parameter time_second_impulse_test = 40_000,
 parameter time_pulse_interval_test = 1_000,
 parameter tipe_pulse_packatge_interval = 50_000
 )( 
-    input CLK, sw_test, reg TIME_IMPULSE,
-                        reg TIME_SECOND_IMPULSE,
-                        reg TIME_PULSE_INTERVAL,
-                        reg TIME_PULSE_PACKATGE_INTERVAL,
+    input CLK, sw_test, //logic TIME_IMPULSE,
+                        //logic TIME_SECOND_IMPULSE,
+                        //logic TIME_PULSE_INTERVAL,
+                        //logic TIME_PULSE_PACKATGE_INTERVAL,
     output reg [3 : 0] IMPULSE_RESOLUTION
     );
 

@@ -1,0 +1,295 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Wed Apr 17 23:36:16 2024
+# Process ID: 21368
+# Current directory: C:/Projects/model/Bachelors_thesis/Bachelors_thesis.runs/synth_1
+# Command line: vivado.exe -log Top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Top.tcl
+# Log file: C:/Projects/model/Bachelors_thesis/Bachelors_thesis.runs/synth_1/Top.vds
+# Journal file: C:/Projects/model/Bachelors_thesis/Bachelors_thesis.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Top.tcl -notrace
+Command: synth_design -top Top -part xc7a35ticsg324-1L
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 9488
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1098.934 ; gain = 10.402
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'Top' [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Top_logic.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Frequency_divider_SCLK' [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/FrequencyDivider.sv:2]
+	Parameter DIVIDER bound to: 3 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'Frequency_divider_SCLK' (1#1) [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/FrequencyDivider.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Load_data' [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Load_data.sv:2]
+	Parameter voltage_amplitude_bits bound to: 14 - type: integer 
+	Parameter cap_choose_bits bound to: 2 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'Load_data' (2#1) [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Load_data.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Generate_impulse' [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Generate_impulse_second.sv:2]
+	Parameter time_impulse_test bound to: 40000 - type: integer 
+	Parameter time_second_impulse_test bound to: 40000 - type: integer 
+	Parameter time_pulse_interval_test bound to: 1000 - type: integer 
+	Parameter tipe_pulse_packatge_interval bound to: 50000 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'Generate_impulse' (3#1) [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Generate_impulse_second.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'SPI' [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/SPI.sv:2]
+	Parameter data_hier_bit bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'SPI' (4#1) [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/SPI.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'Logic' [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Logic.sv:3]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Logic.sv:65]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Logic.sv:284]
+INFO: [Synth 8-6155] done synthesizing module 'Logic' (5#1) [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Logic.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'Top' (6#1) [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Top_logic.sv:2]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1152.859 ; gain = 64.328
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1152.859 ; gain = 64.328
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1152.859 ; gain = 64.328
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1152.859 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/constrs_1/new/pin_out.xdc]
+Finished Parsing XDC File [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/constrs_1/new/pin_out.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/constrs_1/new/pin_out.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/Top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/Top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1253.336 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1253.336 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35ticsg324-1L
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_impulse_reg' in module 'Generate_impulse'
+INFO: [Synth 8-802] inferred FSM for state register 'stage_of_installing_a_temporary_pulse_CLK_reg' in module 'Logic'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+           first_impulse |                            00001 |                            00001
+          pulse_interval |                            00010 |                            00010
+          second_impulse |                            00100 |                            00011
+ pulse_packatge_interval |                            01000 |                            00100
+                  iSTATE |                            10000 |                            00000
+*
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_impulse_reg' using encoding 'one-hot' in module 'Generate_impulse'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+               start_CLK |                            00000 |                            00001
+run_spi_for_first_pulse_CLK |                            00001 |                            00011
+end_spi_for_first_pulse_CLK |                            00010 |                            00100
+wait_to_open_LDAC_for_first_pulse_CLK |                            00011 |                            00101
+    LDAC_for_first_pulse |                            00100 |                            00110
+load_data_for_second_pulse |                            00101 |                            00111
+end_spi_for_second_pulse_CLK |                            00110 |                            01001
+wait_to_open_LDAC_for_second_pulse_CLK |                            00111 |                            01010
+   LDAC_for_second_pulse |                            01000 |                            01011
+load_data_for_third_pulse |                            01001 |                            01100
+end_spi_for_third_pulse_CLK |                            01010 |                            01110
+wait_to_open_LDAC_for_third_pulse_CLK |                            01011 |                            01111
+    LDAC_for_third_pulse |                            01100 |                            10000
+load_data_for_fourth_pulse |                            01101 |                            10001
+end_spi_for_fourth_pulse_CLK |                            01110 |                            10010
+wait_to_open_LDAC_for_fourth_pulse_CLK |                            01111 |                            10011
+   LDAC_for_fourth_pulse |                            10000 |                            10100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'stage_of_installing_a_temporary_pulse_CLK_reg' using encoding 'sequential' in module 'Logic'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   26 Bit       Adders := 1     
+	   2 Input   21 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 1     
+	   2 Input    5 Bit       Adders := 2     
++---Registers : 
+	               26 Bit    Registers := 1     
+	               21 Bit    Registers := 1     
+	               16 Bit    Registers := 6     
+	                6 Bit    Registers := 1     
+	                5 Bit    Registers := 3     
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 5     
++---Muxes : 
+	   2 Input   26 Bit        Muxes := 1     
+	   2 Input   21 Bit        Muxes := 4     
+	   5 Input   21 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 1     
+	  17 Input   16 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 1     
+	  17 Input    6 Bit        Muxes := 1     
+	   5 Input    5 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 27    
+	  17 Input    5 Bit        Muxes := 2     
+	   5 Input    3 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 15    
+	   5 Input    1 Bit        Muxes := 3     
+	  17 Input    1 Bit        Muxes := 5     
+	   6 Input    1 Bit        Muxes := 4     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1253.336 ; gain = 164.805
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |    12|
+|3     |LUT1   |     4|
+|4     |LUT2   |    10|
+|5     |LUT3   |    12|
+|6     |LUT4   |    20|
+|7     |LUT5   |    23|
+|8     |LUT6   |    40|
+|9     |FDRE   |   108|
+|10    |IBUF   |     2|
+|11    |OBUF   |     4|
++------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1271.871 ; gain = 82.863
+Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:23 . Memory (MB): peak = 1271.871 ; gain = 183.340
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1282.793 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 12 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1287.250 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+33 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:24 ; elapsed = 00:00:29 . Memory (MB): peak = 1287.250 ; gain = 198.719
+INFO: [Common 17-1381] The checkpoint 'C:/Projects/model/Bachelors_thesis/Bachelors_thesis.runs/synth_1/Top.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Top_utilization_synth.rpt -pb Top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Apr 17 23:36:50 2024...

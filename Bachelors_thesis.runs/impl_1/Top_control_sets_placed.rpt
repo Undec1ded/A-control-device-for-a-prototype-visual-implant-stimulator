@@ -1,0 +1,93 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Wed Apr 17 23:37:25 2024
+| Host         : LAPTOP-C37AT9AL running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file Top_control_sets_placed.rpt
+| Design       : Top
+| Device       : xc7a35ti
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    15 |
+|    Minimum number of control sets                        |    15 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    67 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    15 |
+| >= 0 to < 4        |     2 |
+| >= 4 to < 6        |     8 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     1 |
+| >= 10 to < 12      |     1 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     2 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              13 |           11 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              31 |           10 |
+| Yes          | No                    | No                     |              33 |           12 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              32 |            8 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------------------------------+---------------------------------------------------------------------------+-------------------------------------------+------------------+----------------+--------------+
+|              Clock Signal              |                               Enable Signal                               |              Set/Reset Signal             | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------------------------------+---------------------------------------------------------------------------+-------------------------------------------+------------------+----------------+--------------+
+|  CLK_IBUF_BUFG                         | Logic/coounter_for_close_LDAC[5]_i_2_n_0                                  | Logic/coounter_for_close_LDAC[5]_i_1_n_0  |                1 |              1 |         1.00 |
+|  frequency_divider_SCLK/SCLK_OBUF_BUFG | SPI/SDI_transfer                                                          |                                           |                1 |              1 |         1.00 |
+|  CLK_IBUF_BUFG                         | Generate_impulse/FSM_onehot_state_impulse[3]_i_1_n_0                      |                                           |                2 |              4 |         2.00 |
+|  CLK_IBUF_BUFG                         | Logic/coounter_for_close_LDAC[5]_i_2_n_0                                  |                                           |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG                         | Logic/data[15]_i_1_n_0                                                    |                                           |                1 |              4 |         4.00 |
+|  frequency_divider_SCLK/SCLK_OBUF_BUFG |                                                                           |                                           |                3 |              4 |         1.33 |
+|  frequency_divider_SCLK/SCLK_OBUF_BUFG | Logic/__9/i__n_0                                                          |                                           |                1 |              4 |         4.00 |
+|  CLK_IBUF_BUFG                         | Logic/FSM_sequential_stage_of_installing_a_temporary_pulse_CLK[4]_i_1_n_0 |                                           |                3 |              5 |         1.67 |
+|  CLK_IBUF_BUFG                         | Logic/wait_to_open_LDAC_counter[4]_i_1_n_0                                |                                           |                2 |              5 |         2.50 |
+|  frequency_divider_SCLK/SCLK_OBUF_BUFG |                                                                           | SPI/bits_counter_16[4]_i_1_n_0            |                2 |              5 |         2.50 |
+|  frequency_divider_SCLK/SCLK_OBUF_BUFG | SPI/data_amplitude[15]_i_1_n_0                                            |                                           |                1 |              6 |         6.00 |
+|  CLK_IBUF_BUFG                         |                                                                           |                                           |                8 |              9 |         1.12 |
+|  frequency_divider_SCLK/SCLK_OBUF_BUFG | SPI/data_amplitude[15]_i_1_n_0                                            | Logic/start_spi_flag_reg_0                |                2 |             10 |         5.00 |
+|  CLK_IBUF_BUFG                         | Generate_impulse/counter_time[20]_i_2_n_0                                 | Generate_impulse/counter_time[20]_i_1_n_0 |                5 |             21 |         4.20 |
+|  CLK_IBUF_BUFG                         |                                                                           | frequency_divider_SCLK/count[25]_i_1_n_0  |                8 |             26 |         3.25 |
++----------------------------------------+---------------------------------------------------------------------------+-------------------------------------------+------------------+----------------+--------------+
+
+

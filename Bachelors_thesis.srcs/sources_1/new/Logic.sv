@@ -4,12 +4,12 @@ module Logic(
     input CLK, SCLK, SW, END_spi,
           logic [15 : 0] DATA_IN_At,
           logic [15 : 0] DATA_IN_Bt,
+          logic [15 : 0] DATA_IN_ziro,
           logic [3 : 0] TIME_IMPULSE, 
           logic [4 : 0] BITS_COUNTER_SPI,
     output logic LDAC, 
            logic [15 : 0] DATA_OUT,
-           logic START_SPI,  
-           logic CS 
+           logic START_SPI
 );
 
 reg start_CLK = 1'b1;
@@ -56,12 +56,10 @@ reg counter_16bits_for_CS_end = 0;
 reg ldac_flag = 1;
 reg [15 : 0] data_out_flag = 0;
 reg start_spi_flag = 0;
-reg cs_flag = 1;
 
 assign LDAC = ldac_flag;
 assign DATA_OUT  = data_out_flag;
 assign START_SPI = start_spi_flag;
-assign CS = cs_flag;
 
 always @(posedge CLK) begin
     case (stage_of_installing_a_temporary_pulse_CLK) 
@@ -90,7 +88,7 @@ always @(posedge CLK) begin
                 stage_of_installing_a_temporary_pulse_CLK <= end_spi_for_first_pulse_CLK;
             end
             else begin
-                data = 0;
+                data = DATA_IN_ziro;
                 stage_of_installing_a_temporary_pulse_CLK <= wait_to_open_LDAC_for_first_pulse_CLK;
                 stage_of_installing_a_temporary_pulse_SCLK <= end_spi_SCLK;
             end
@@ -113,7 +111,7 @@ always @(posedge CLK) begin
             else begin
                 stage_of_installing_a_temporary_pulse_SCLK <= close_LDAC_SCLK;
                 stage_of_installing_a_temporary_pulse_CLK <= load_data_for_second_pulse;
-                data = 0;
+                data = DATA_IN_ziro;
                 coounter_for_close_LDAC = 0;
             end
         end
@@ -193,7 +191,7 @@ always @(posedge CLK) begin
             end
         end
         LDAC_for_third_pulse : begin
-            data <= 0;
+            data <= DATA_IN_ziro;
             if (TIME_IMPULSE == 3) begin
                 if (coounter_for_close_LDAC != 10) begin
                     stage_of_installing_a_temporary_pulse_SCLK <= open_LDAC_SCLK;
@@ -256,6 +254,29 @@ always @(posedge CLK) begin
             end
         end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     endcase 
 end
 
@@ -265,16 +286,13 @@ always @(posedge SCLK) begin
             ldac_flag <= 1;
             data_out_flag <= data;
             start_spi_flag <= 0;
-            cs_flag <= 1;
         end
         start_SPI_SCLK : begin
-            start_spi_flag <= 1;
-            cs_flag <= 0;
+            start_spi_flag = 1;
             data_out_flag <= data;
         end 
         end_spi_SCLK : begin
-            start_spi_flag <= 0;
-            cs_flag <= 1;
+            start_spi_flag = 0;
             data_out_flag <= data;
         end
         open_LDAC_SCLK : begin
