@@ -124,6 +124,7 @@ set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param chipscope.maxJobs 3
+  set_param xicom.use_bs_reader 1
   open_checkpoint Top_routed.dcp
   set_property webtalk.parent_dir C:/Projects/model/Bachelors_thesis/Bachelors_thesis.cache/wt [current_project]
 set_property TOP Top [current_fileset]

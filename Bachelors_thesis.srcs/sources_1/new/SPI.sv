@@ -2,7 +2,7 @@
 module SPI#(
     parameter data_hier_bit = 16
 )(
-    input SCLK, SDI_flag, [data_hier_bit - 1 : 0] DATA, 
+    input CLK, SCLK, SDI_flag, [data_hier_bit - 1 : 0] DATA, 
 
     output SDI, logic END_spi,
                 logic [4 : 0] BITS_COUNTER_SPI,
@@ -20,9 +20,14 @@ assign END_spi = counter_flag;
 assign BITS_COUNTER_SPI = bits_counter_16;
 assign CS = cs_flag;
 
-always @(posedge SCLK) begin
-    if (SDI_flag == 0) begin
+always @(posedge CLK) begin
+     if (counter_flag == 1) begin
         data_amplitude <= DATA; 
+    end
+end
+
+always @(negedge  SCLK) begin
+    if (SDI_flag == 0) begin
         bits_counter_16 <= 0;
         counter_flag <= 1;
         cs_flag <= 1;
@@ -39,6 +44,7 @@ always @(posedge SCLK) begin
             bits_counter_16 <= 0;
             counter_flag <= 1;
             cs_flag <= 1;
+            SDI_transfer <= 0;
         end
     end
 end

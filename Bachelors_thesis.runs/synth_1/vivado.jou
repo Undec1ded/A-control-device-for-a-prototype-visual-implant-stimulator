@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Wed Apr 17 23:36:16 2024
-# Process ID: 21368
+# Start of session at: Fri Apr 19 16:01:48 2024
+# Process ID: 18232
 # Current directory: C:/Projects/model/Bachelors_thesis/Bachelors_thesis.runs/synth_1
 # Command line: vivado.exe -log Top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Top.tcl
 # Log file: C:/Projects/model/Bachelors_thesis/Bachelors_thesis.runs/synth_1/Top.vds

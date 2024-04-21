@@ -2,7 +2,7 @@
 module tb_top();
 
 reg CLK = 0;
-reg SW = 0;
+reg [1 : 0] SW = 2'b00;
 
 wire LDAC;
 wire SCLK;
@@ -20,9 +20,9 @@ Top tb_top(
 
 always#5 CLK = !CLK;
 initial begin
-    SW = 0;
+    SW = 2'b00;
     #100
-    SW = 1;
+    SW = 2'b11;
     
 end
 

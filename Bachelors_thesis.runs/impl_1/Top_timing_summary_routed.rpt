@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Wed Apr 17 23:37:44 2024
+| Date         : Fri Apr 19 16:03:09 2024
 | Host         : LAPTOP-C37AT9AL running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -max_paths 10 -file Top_timing_summary_routed.rpt -pb Top_timing_summary_routed.pb -rpx Top_timing_summary_routed.rpx -warn_on_violation
 | Design       : Top
@@ -39,10 +39,10 @@ check_timing report
 
 Table of Contents
 -----------------
-1. checking no_clock (109)
+1. checking no_clock (95)
 2. checking constant_clock (0)
 3. checking pulse_width_clock (0)
-4. checking unconstrained_internal_endpoints (236)
+4. checking unconstrained_internal_endpoints (192)
 5. checking no_input_delay (1)
 6. checking no_output_delay (4)
 7. checking multiple_clock (0)
@@ -52,11 +52,11 @@ Table of Contents
 11. checking partial_output_delay (0)
 12. checking latch_loops (0)
 
-1. checking no_clock (109)
---------------------------
- There are 79 register/latch pins with no clock driven by root clock pin: CLK (HIGH)
+1. checking no_clock (95)
+-------------------------
+ There are 78 register/latch pins with no clock driven by root clock pin: CLK (HIGH)
 
- There are 30 register/latch pins with no clock driven by root clock pin: frequency_divider_SCLK/sclk_flag_reg/Q (HIGH)
+ There are 17 register/latch pins with no clock driven by root clock pin: frequency_divider_SCLK/sclk_flag_reg/Q (HIGH)
 
 
 2. checking constant_clock (0)
@@ -69,9 +69,9 @@ Table of Contents
  There are 0 register/latch pins which need pulse_width check
 
 
-4. checking unconstrained_internal_endpoints (236)
+4. checking unconstrained_internal_endpoints (192)
 --------------------------------------------------
- There are 236 pins that are not constrained for maximum delay. (HIGH)
+ There are 192 pins that are not constrained for maximum delay. (HIGH)
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 
