@@ -80,6 +80,7 @@ always @(posedge CLK) begin
     case (SW)
     2'b00 : begin
         stage_of_installing_a_temporary_pulse_SCLK <= start_SCLK;
+        data <= DATA_IN_At_first_channel;
     end
     2'b01 : begin
         case (stage_of_installing_a_temporary_pulse_CLK) 
