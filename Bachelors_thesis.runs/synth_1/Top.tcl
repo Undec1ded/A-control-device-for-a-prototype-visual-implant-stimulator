@@ -71,6 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 3
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35ticsg324-1L
 
@@ -91,6 +92,7 @@ read_verilog -library xil_defaultlib -sv {
   C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Load_data.sv
   C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Logic.sv
   C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/SPI.sv
+  C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/UART_load_data.sv
   C:/Projects/model/Bachelors_thesis/Bachelors_thesis.srcs/sources_1/new/Top_logic.sv
 }
 OPTRACE "Adding files" END { }

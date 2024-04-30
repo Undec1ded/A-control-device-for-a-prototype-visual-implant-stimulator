@@ -6,10 +6,11 @@ parameter time_second_impulse_test = 40_000,
 parameter time_pulse_interval_test = 1_000,
 parameter tipe_pulse_packatge_interval = 50_000
 )( 
-    input CLK, sw_test, reg TIME_IMPULSE,
-                        reg TIME_SECOND_IMPULSE,
-                        reg TIME_PULSE_INTERVAL,
-                        reg TIME_PULSE_PACKATGE_INTERVAL,
+    input CLK, sw_test, START,
+                    logic TIME_IMPULSE,
+                    logic TIME_SECOND_IMPULSE,
+                    logic TIME_PULSE_INTERVAL,
+                    logic TIME_PULSE_PACKATGE_INTERVAL,
     output reg [3 : 0] IMPULSE_RESOLUTION
     );
 
@@ -24,12 +25,12 @@ reg [2 : 0] pulse_packatge_interval = 3'b100;
 always @(posedge clk) begin
     case (state_impulse)
     first_impulse : begin
-        if (counter_time =! time_impulse_test & sw_test == 1) begin
+        if (counter_time =! time_impulse_test & sw_test == 1 & START == 1) begin
             counter_time = counter_time + 1;
             IMPULSE_RESOLUTION = 1;
         end
         else begin
-            if (sw_test == 1) begin
+            if (sw_test == 1 & START == 1) begin
                 counter_time = 0;
                 IMPULSE_RESOLUTION = 1;
                 state_impulse <= pulse_interval;    
