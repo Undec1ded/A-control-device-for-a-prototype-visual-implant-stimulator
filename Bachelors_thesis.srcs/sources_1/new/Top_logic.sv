@@ -50,7 +50,7 @@ assign SCLK = sclk_wire;
 
 UART_load_data UART_load_data(
     //input
-    .CLK(CLK), .UART_Rx_data(UART_Rx_data), 
+    .CLK(CLK), .UART_data(UART_Rx_data), 
     //output
     .LEDs(LEDs[1 : 0]), .START(start_bit_wire), .UART_Tx(UART_Tx_data), .DATA_time(data_time_wire),
     .DATA_amplitude(data_amplitude_wire), . DATA_num(data_num_wire), .PACKETS_download(pakets_download_wire));
