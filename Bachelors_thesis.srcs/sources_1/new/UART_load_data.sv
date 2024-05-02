@@ -10,7 +10,7 @@ module UART_load_data(
 localparam clkMGz = 100_000_000;
 localparam bud_rage = 1152000;
 localparam one_bit_time = clkMGz / bud_rage;
-localparam data_16bits = 16;
+localparam data_16bits = 15;
 
 //UART_Tx
 reg uart_tx_flag = 1;
@@ -111,7 +111,9 @@ always @(posedge CLK) begin
             led_green <= 1;
         end
         Wait_signal : begin
-            States_of_data <= (UART_data == 0) ? Load_data : Wait_signal;    
+            States_of_data <= (UART_data == 0) ? Load_data : Wait_signal;
+            counter_data <= 0;
+              
         end
         Load_data : begin
             start_flag <= 0;
@@ -123,21 +125,22 @@ always @(posedge CLK) begin
                 counter_one_bit <= 0;
                 if (counter_data < 7'b1001111) begin
                     counter_data <= counter_data + 1;
-                    connection_data = connection_data << UART_data;
+                    connection_data = connection_data << 1;
+                    connection_data = connection_data + UART_data;
                 end
                 else if (connection_data[79 : 79 - data_16bits] == vl_packet_start) begin
+                    amplitude_data = connection_data;
                     Stages_of_16bits_data <= Vl_packet_answer;
-                    amplitude_data <= connection_data;
                     States_of_data <= Wait_signal;
                 end
                 else if (connection_data[79 : 79 - data_16bits] == tm_packet_start) begin
+                    time_data = connection_data;
                     Stages_of_16bits_data <= Tm_packet_answer;
-                    time_data <= connection_data;
                     States_of_data <= Wait_signal;
                 end
                 else if (connection_data[79 : 79 - data_16bits] == ip_packet_start) begin
+                    num_data = connection_data;
                     Stages_of_16bits_data <= Ip_packet_answer;
-                    num_data <= connection_data;
                     States_of_data <= Wait_signal;
                     packets_download_flag = 1;
                 end
@@ -174,13 +177,14 @@ always @(posedge CLK) begin
         Idle_16bits : begin
             uart_tx_flag = 1;
             counter_one_bit_answer <= 0;
+            counter_16bits_answer <= 0;
             vl_packet_answer = 16'b01010110_01001100;
             tm_packet_answer = 16'b01010100_01001101;
             ip_packet_answer = 16'b01001001_01010000;
         end
         Vl_packet_answer : begin
             if (counter_one_bit_answer != one_bit_time) begin
-                counter_one_bit_answer <= counter_one_bit + 1;
+                counter_one_bit_answer <= counter_one_bit_answer + 1;
             end
             else begin
                 counter_one_bit_answer <= 0;
@@ -195,7 +199,7 @@ always @(posedge CLK) begin
         end
         Tm_packet_answer : begin
             if (counter_one_bit_answer != one_bit_time) begin
-                counter_one_bit_answer <= counter_one_bit + 1;
+                counter_one_bit_answer <= counter_one_bit_answer + 1;
             end
             else begin
                 counter_one_bit_answer <= 0;
@@ -225,6 +229,4 @@ always @(posedge CLK) begin
         end
     endcase
 end
-
-
 endmodule

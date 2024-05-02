@@ -39,7 +39,7 @@ initial begin
     // Send array of 80 zero bits
     repeat (80) begin
         UART_data = 0; // Data bit
-        #3916;
+        #520;
     end
 
     // Stop bit
@@ -50,7 +50,7 @@ initial begin
     for (int i = 1; i < 80 ; i++) begin
       UART_data  = test_upload_parametr[79];
       test_upload_parametr = test_upload_parametr << 1; 
-      #3916;
+      #520;
     end
     // End simulation
     #1000000;
