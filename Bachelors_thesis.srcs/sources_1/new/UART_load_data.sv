@@ -120,7 +120,7 @@ always @(posedge CLK) begin
             connection_data <= 0;
         end
         Half_period : begin
-            if (counter_one_bit != one_bit_time/2) begin
+            if (counter_one_bit != (one_bit_time/2 + one_bit_time)) begin
                 counter_one_bit <= counter_one_bit + 1;
             end
             else begin

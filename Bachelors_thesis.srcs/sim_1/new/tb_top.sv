@@ -24,15 +24,15 @@ Top tb_top(
 .SDI(SDI)
 );
 //vl - 16bits start parametrs, 16bits negativ vl, 16bits ziro, 16bits positiv vl, 16bits ziro
-reg [79 : 0] test_upload_parametr        = {16'b01010110_01001100 , 16'b0000000_111110100 , 16'b0, 16'b0000000_111110100 , 16'b0};
+reg [80 : 0] test_upload_parametr        = {1'b0 , 16'b01010110_01001100 , 16'b0000000_111110100 , 16'b0, 16'b0000000_111110100 , 16'b0};
 //time - 16bits start parametrs, 16bits negative time, 16bits pause time, 16bits positive time, 16bits init time
-reg [79 : 0] test_upload_parametr_time   = {16'b01010100_01001101 , 16'b0000000_110010000 , 16'b00000000_01100100 ,
+reg [80 : 0] test_upload_parametr_time   = {1'b0 , 16'b01010100_01001101 , 16'b0000000_110010000 , 16'b00000000_01100100 ,
                                             16'b00000001_10010000 , 16'b0000000_111110100};
 //num - 16bits start parametrs, 16bits relax time , 16bits numpack, 16bits num frames, 16bits ziro
-reg [79 : 0] test_upload_parametr_num    = {16'b01001001_01010000 , 16'b0000001_111101000 , 16'b00000000_00001010 , 
+reg [80 : 0] test_upload_parametr_num    = {1'b0 , 16'b01001001_01010000 , 16'b0000001_111101000 , 16'b00000000_00001010 , 
                                             16'b00000000_00000011 , 16'b0};
 //start sim - 16bits start parametrs, 16*4bits ziro
-reg [79 : 0] test_upload_parametr_start  = {16'b01010011_01010100 , 64'b0};
+reg [80 : 0] test_upload_parametr_start  = {1'b0 , 16'b01010011_01010100 , 64'b0};
 
 always#5 CLK = !CLK;
 initial begin
