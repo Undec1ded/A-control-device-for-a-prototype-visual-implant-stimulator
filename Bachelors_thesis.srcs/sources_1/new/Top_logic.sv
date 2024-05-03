@@ -41,6 +41,7 @@ wire [15 : 0] data_out_wire;
 
 //Generate_impulse parametrs
 wire [3 : 0] pulse_resolution_wire;
+wire pulse_end_wire;
 
 //SPI parametrs
 wire end_spi_flag;
@@ -50,7 +51,7 @@ assign SCLK = sclk_wire;
 
 UART_load_data UART_load_data(
     //input
-    .CLK(CLK), .UART_data(UART_Rx_data), 
+    .CLK(CLK), .UART_data(UART_Rx_data), .PULSE_END(pulse_end_wire),
     //output
     .LEDs(LEDs[1 : 0]), .START(start_bit_wire), .UART_Tx(UART_Tx_data), .DATA_time(data_time_wire),
     .DATA_amplitude(data_amplitude_wire), . DATA_num(data_num_wire), .PACKETS_download(pakets_download_wire));
@@ -61,7 +62,7 @@ Frequency_divider_SCLK frequency_divider_SCLK(
     .SCLK(sclk_wire));
 Load_data Load_data (
     //input
-    .CLK(CLK), .DATA_Vl(data_amplitude_wire),.DATA_Tm(data_time_wire), .DATA_Ip(data_num_wire),
+    .CLK(CLK), .DATA_Vl(data_amplitude_wire),.DATA_Tm(data_time_wire), .DATA_Ip(data_num_wire), .PACKETS_download(pakets_download_wire),
     //output
     .DATA_At_first_channel(data_At_wire_first_channel), .DATA_Bt_first_channel(data_Bt_wire_first_channel),
     .DATA_ziro_first_channel(data_ziro_wire_first_channel), .DATA_At_second_channel(data_At_wire_second_channel),
@@ -76,7 +77,7 @@ Generate_impulse Generate_impulse(
     .TIME_fourth_pulse(time_fourth_pulse_wire), .TIME_relax(time_relax_wire), .NUM_pack(num_pack_wire),
     .NUM_of_frames(num_of_frames_wire),
     //output
-    .IMPULSE_RESOLUTION(pulse_resolution_wire), .LEDs(LEDs[3 : 2]));
+    .IMPULSE_RESOLUTION(pulse_resolution_wire), .LEDs(LEDs[3 : 2]), .PULSE_END(pulse_end_wire));
 SPI SPI (
     //input
     .CLK(CLK), .SCLK(sclk_wire), .SDI_flag(start_sdi_wire), .DATA(data_out_wire), 

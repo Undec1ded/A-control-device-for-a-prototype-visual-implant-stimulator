@@ -13,7 +13,9 @@ wire UART_Tx;
 wire [79:0] DATA_time, DATA_amplitude, DATA_num;
 wire START, PACKETS_download;
 wire [1:0] LEDs;
-reg [79 : 0] test_upload_parametr = {16'b01010110_01001100 , 62'hffffff , 1'b0};
+reg [79 : 0] test_upload_parametr      = {16'b01010110_01001100 , 63'hffffff , 1'b0};
+reg [79 : 0] test_upload_parametr_time = {16'b01010100_01001101 , 63'hffffff , 1'b0};
+reg [79 : 0] test_upload_parametr_num  = {16'b01001001_01010000 , 63'hffffff , 1'b0};
 // Instantiate the UART module
 UART_load_data dut (
     .CLK(CLK),
@@ -28,7 +30,7 @@ UART_load_data dut (
 );
 
 // Clock generation
-always #((CLK_PERIOD / 2)) CLK = ~CLK;
+always #5 CLK = ~CLK;
 
 // Test stimulus
 initial begin
@@ -39,7 +41,7 @@ initial begin
     // Send array of 80 zero bits
     repeat (80) begin
         UART_data = 0; // Data bit
-        #520;
+        #8680;
     end
 
     // Stop bit
@@ -47,10 +49,10 @@ initial begin
     #100000;
 
     // Add more test stimuli as needed
-    for (int i = 1; i < 80 ; i++) begin
+    for (int i = 1; i <= 80 ; i++) begin
       UART_data  = test_upload_parametr[79];
       test_upload_parametr = test_upload_parametr << 1; 
-      #520;
+      #8680;
     end
     // End simulation
     #1000000;

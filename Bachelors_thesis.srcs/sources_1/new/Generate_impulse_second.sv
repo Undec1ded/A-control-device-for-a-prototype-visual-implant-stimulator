@@ -11,7 +11,8 @@ parameter tipe_pulse_packatge_interval = 50_000
                 logic [15 : 0] TIME_first_pulse, TIME_second_pulse, TIME_third_pulse, TIME_fourth_pulse, TIME_relax,
                 logic [15 : 0] NUM_pack, NUM_of_frames,
     output  logic [1 : 0] LEDs, 
-            logic [3 : 0] IMPULSE_RESOLUTION
+            logic [3 : 0] IMPULSE_RESOLUTION,
+            logic PULSE_END
     );
 
 reg [20 : 0] counter_time = 0;
@@ -28,8 +29,11 @@ reg [3 : 0] pulse_resolution_flag = 0;
 reg [15 : 0] counter_num_puck = 0;
 reg [15 : 0] counter_frames = 0;
 
+reg pulse_end = 1;
+
 assign IMPULSE_RESOLUTION = pulse_resolution_flag;
 assign LEDs = led_wait;
+assign PULSE_END = pulse_end;
 
 always @(posedge CLK) begin
     case (state_impulse)
@@ -42,6 +46,7 @@ always @(posedge CLK) begin
         end
         else if (counter_frames != NUM_of_frames) begin
             if (counter_time != (TIME_first_pulse * 100) & (sw_test == 2'b01 | sw_test == 2'b10 | sw_test == 2'b11) & START == 1) begin
+                pulse_end <= 0;
                 counter_time = counter_time + 1;
                 pulse_resolution_flag = 1;
             end
@@ -59,6 +64,7 @@ always @(posedge CLK) begin
         end
         else begin
             state_impulse <= first_impulse;
+            pulse_end = 1;
             pulse_resolution_flag <= 4;
         end
        

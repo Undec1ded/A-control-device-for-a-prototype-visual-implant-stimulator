@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 module UART_load_data(
-    input   logic UART_data, CLK,
+    input   logic UART_data, CLK, PULSE_END,
     output  logic UART_Tx,
             logic [79 : 0] DATA_time, DATA_amplitude, DATA_num,
             logic START,
@@ -8,8 +8,8 @@ module UART_load_data(
             logic [1 : 0] LEDs 
     );
 localparam clkMGz = 100_000_000;
-localparam bud_rage = 1152000;
-localparam one_bit_time = clkMGz / bud_rage;
+localparam baud_rage = 115200;
+localparam one_bit_time = clkMGz / baud_rage;
 localparam data_16bits = 15;
 
 //UART_Tx
@@ -39,9 +39,10 @@ reg [79 : 0]  num_data = 0;
 
 //stages DATA
 reg Idle_16bits = 1'b1;
-reg [1 : 0] Vl_packet_answer = 2'b10;
-reg [1 : 0] Tm_packet_answer = 2'b11;
-reg [2 : 0] Ip_packet_answer = 3'b100;
+reg [1 : 0] Vl_packet_answer      = 2'b10;
+reg [1 : 0] Tm_packet_answer      = 2'b11;
+reg [2 : 0] Ip_packet_answer      = 3'b100;
+reg [3 : 0] Simulation_end_answer = 3'b101;
 reg [3 : 0] Stages_of_16bits_data = 1'b1;
 
 //stahes UART
@@ -51,7 +52,9 @@ reg [2 : 0] Mistake_connect = 2'b11;
 reg [3 : 0] Connection_response = 3'b100;
 reg [3 : 0] Wait_signal = 3'b101;
 reg [3 : 0] Load_data = 3'b110;
-reg [3 : 0] Start_simulation = 3'b111;
+reg [3 : 0] Half_period = 3'b111;
+reg [4 : 0] Start_simulation = 4'b1000;
+reg [4 : 0] Simulation_end = 4'b1001;
 reg [5 : 0] States_of_data = 1'b1;
 
 
@@ -65,6 +68,7 @@ reg [15 : 0] ip_packet_start  = 16'b01001001_01010000;
 reg [15 : 0] ip_packet_answer = 16'b01001001_01010000; //0x49,0x50
 
 reg [15 : 0] start_data       = 16'b01010011_01010100; //0x53,0x54
+reg [15 : 0] end_sim_answer   = 16'b0; // 0xcf
 
 assign LEDs[0] = led_red;
 assign LEDs[1] = led_green;
@@ -111,13 +115,22 @@ always @(posedge CLK) begin
             led_green <= 1;
         end
         Wait_signal : begin
-            States_of_data <= (UART_data == 0) ? Load_data : Wait_signal;
+            States_of_data <= (UART_data == 0) ? Half_period : Wait_signal;
             counter_data <= 0;
-              
+            connection_data <= 0;
+        end
+        Half_period : begin
+            if (counter_one_bit != one_bit_time/2) begin
+                counter_one_bit <= counter_one_bit + 1;
+            end
+            else begin
+                States_of_data <= Load_data;
+                counter_one_bit <= 0;
+            end    
         end
         Load_data : begin
+            Stages_of_16bits_data <= Idle_16bits;
             start_flag <= 0;
-            packets_download_flag = 0;
             if (counter_one_bit != one_bit_time) begin
                 counter_one_bit <= counter_one_bit + 1;
             end         
@@ -129,6 +142,7 @@ always @(posedge CLK) begin
                     connection_data = connection_data + UART_data;
                 end
                 else if (connection_data[79 : 79 - data_16bits] == vl_packet_start) begin
+                    packets_download_flag = 0;
                     amplitude_data = connection_data;
                     Stages_of_16bits_data <= Vl_packet_answer;
                     States_of_data <= Wait_signal;
@@ -154,20 +168,24 @@ always @(posedge CLK) begin
             end    
         end
         Start_simulation : begin
-            if (counter_one_bit != one_bit_time) begin
-                counter_one_bit <= counter_one_bit + 1;
+            if (PULSE_END == 1) begin
+                start_flag <= 1;
+                counter_data <= 0;
             end
             else begin
-                counter_one_bit <= 0;
-                if (counter_data < 7'b1001111) begin
-                    counter_data <= counter_data + 1;
-                    connection_data = connection_data << UART_data;
-                end
-                else if (connection_data == start_data) begin
-                    start_flag = 1;//test parametr
-                    States_of_data <= Wait_signal;
-                end
+                counter_data <= 0;
+                States_of_data <= Simulation_end;
+            end
         end
+        Simulation_end : begin
+           if (PULSE_END == 0) begin
+               States_of_data <= Simulation_end;
+           end
+           else begin
+               start_flag <= 0;
+               States_of_data <= Wait_signal;
+               Stages_of_16bits_data <= Simulation_end_answer;
+           end
         end
     endcase
 end
@@ -188,12 +206,13 @@ always @(posedge CLK) begin
             end
             else begin
                 counter_one_bit_answer <= 0;
-                if (counter_16bits_answer < 5'b10001) begin
+                if (counter_16bits_answer < 5'b10000) begin
                     uart_tx_flag = vl_packet_answer[15];
                     vl_packet_answer = vl_packet_answer << 1;
+                    counter_16bits_answer = counter_16bits_answer + 1;
                 end
                 else begin
-                    Stages_of_16bits_data <= Idle_16bits;
+                    uart_tx_flag = 1;
                 end
             end
         end
@@ -203,27 +222,45 @@ always @(posedge CLK) begin
             end
             else begin
                 counter_one_bit_answer <= 0;
-                if (counter_16bits_answer < 5'b10001) begin
+                if (counter_16bits_answer < 5'b10000) begin
                     uart_tx_flag = tm_packet_answer[15];
                     tm_packet_answer = tm_packet_answer << 1;
+                    counter_16bits_answer = counter_16bits_answer + 1;
                 end
                 else begin
-                    Stages_of_16bits_data <= Idle_16bits;
+                    uart_tx_flag = 1;
                 end
             end
         end
         Ip_packet_answer : begin
             if (counter_one_bit_answer != one_bit_time) begin
-                counter_one_bit_answer <= counter_one_bit + 1;
+                counter_one_bit_answer <= counter_one_bit_answer + 1;
             end
             else begin
                 counter_one_bit_answer <= 0;
-                if (counter_16bits_answer < 5'b10001) begin
+                if (counter_16bits_answer < 5'b10000) begin
                     uart_tx_flag = ip_packet_answer[15];
                     ip_packet_answer = ip_packet_answer << 1;
+                    counter_16bits_answer = counter_16bits_answer + 1;
                 end
                 else begin
-                    Stages_of_16bits_data <= Idle_16bits;
+                    uart_tx_flag = 1;
+                end
+            end
+        end
+        Simulation_end_answer : begin
+            if (counter_one_bit_answer != one_bit_time) begin
+                counter_one_bit_answer <= counter_one_bit_answer + 1;
+            end
+            else begin
+                counter_one_bit_answer <= 0;
+                if (counter_16bits_answer < 5'b10000) begin
+                    uart_tx_flag = end_sim_answer[15];
+                    end_sim_answer = end_sim_answer << 1;
+                    counter_16bits_answer = counter_16bits_answer + 1;
+                end
+                else begin
+                    uart_tx_flag = 1;
                 end
             end
         end
