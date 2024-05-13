@@ -2,7 +2,7 @@
 module Top( 
     input logic CLK, UART_Rx_data, 
                 logic [1 : 0] SW,
-    output logic SCLK, SDI, CS, LDAC, UART_Tx_data,
+    output logic SCLK, SDI, CS, LDAC, UART_Tx_data,  UART_Tx_test, UART_Rx_test,
                 logic [3 : 0] LEDs
     );
 
@@ -53,8 +53,9 @@ UART_load_data UART_load_data(
     //input
     .CLK(CLK), .UART_data(UART_Rx_data), .PULSE_END(pulse_end_wire),
     //output
-    .LEDs(LEDs[1 : 0]), .START(start_bit_wire), .UART_Tx(UART_Tx_data), .DATA_time(data_time_wire),
-    .DATA_amplitude(data_amplitude_wire), . DATA_num(data_num_wire), .PACKETS_download(pakets_download_wire));
+    .LEDs(LEDs), .START(start_bit_wire), .UART_Tx(UART_Tx_data), .DATA_time(data_time_wire),
+    .DATA_amplitude(data_amplitude_wire), . DATA_num(data_num_wire), .PACKETS_download(pakets_download_wire), 
+    .UART_Tx_test(UART_Tx_test), .UART_Rx_test(UART_Rx_test));
 
 Frequency_divider_SCLK frequency_divider_SCLK(
     .CLK(CLK),
@@ -77,7 +78,7 @@ Generate_impulse Generate_impulse(
     .TIME_fourth_pulse(time_fourth_pulse_wire), .TIME_relax(time_relax_wire), .NUM_pack(num_pack_wire),
     .NUM_of_frames(num_of_frames_wire),
     //output
-    .IMPULSE_RESOLUTION(pulse_resolution_wire), .LEDs(LEDs[3 : 2]), .PULSE_END(pulse_end_wire));
+    .IMPULSE_RESOLUTION(pulse_resolution_wire), .PULSE_END(pulse_end_wire));
 SPI SPI (
     //input
     .CLK(CLK), .SCLK(sclk_wire), .SDI_flag(start_sdi_wire), .DATA(data_out_wire), 
