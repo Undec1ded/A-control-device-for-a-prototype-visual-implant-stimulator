@@ -1,5 +1,6 @@
 # A-control-device-for-a-prototype-visual-implant-stimulator
 Development of a control device for a prototype visual implant stimulator. The set targets, objectives and technical specifications are set by the specifics of the final qualification work and the parameters of the customer.  The main language - system verilog. Сonnection diagram user interface, FPGA and prototapy of a vision cortical implant: 
 ![sheme_all](https://github.com/Undec1ded/A-control-device-for-a-prototype-visual-implant-stimulator/assets/80984117/b875d6ce-dbc7-4f73-bdf3-a16bdde16db8)
+The logic programming task is divided into 2 modules "receive, process the signal" and "generate a sequence of control DAC signals". Two modules are responsible for receiving data and processing data: the receiving signal to the UART interface "UART\_load\_data", the processing signal "Load\_data". The logic of the sequence of output signals controlling the DAC is divided into four modules: frequency divider "Frequency\_divider\_SCLK", pulse duration control "Generate\_impulse", voltage switching "Logic", data transmission to the DAC "SPI". Combining the "Top" modules.
 Block diagram of work logic project:
 ![sheme_top](https://github.com/Undec1ded/A-control-device-for-a-prototype-visual-implant-stimulator/assets/80984117/2350fe6e-4c97-40d5-855f-cb2a97606e18)
